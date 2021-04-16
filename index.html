@@ -21,21 +21,18 @@
 
                 <div class="circle">
 
-                    <p class="timer display-3 mx-auto">
-
-                        25:00
-                    </p>
+                    <p id="timer" class="display-3 mx-auto">25:00</p>
 
                 </div>
                 <div class="my-3 text-secondary">
-                    <form class="task">
-                        <input type="text" placeholder="Enter your task" class="form-control">
-                    </form>
+                    <div>
+                        <input id="task" type="text" placeholder="Enter your task" class="form-control">
+                    </div>
 
                     <div class="controls my-3">
-                        <button><span class="material-icons">play_arrow</span></button>
-                        <button class="d-none"><span class="material-icons">pause</span></button>
-                        <button class="d-none"><span class="material-icons">stop</span></button>
+                        <button id="play"><span class="material-icons">play_arrow</span></button>
+                        <button id="pause" class="d-none"><span class="material-icons">pause</span></button>
+                        <button id="stop" class="d-none"><span class="material-icons">stop</span></button>
                     </div>
                     <h3>
                         Changes made here will reflect at the start of the next work / break session
@@ -44,10 +41,10 @@
                     <div>
                         <div class="form-row">
                             <div class="col">
-                                <input type="text" class="form-control" value="25" readonly>
+                                <input id="time" type="number" min="0" class="form-control" value="25">
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" value="5" readonly>
+                                <input id="break" type="number" min="0" class="form-control" value="5">
                             </div>
                         </div>
                     </div>
