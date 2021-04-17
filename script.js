@@ -79,7 +79,7 @@ let startTask = () => {
       workTimeLeft--;
     }
     displayTimeLeft();
-  }, 100);
+  }, 1000);
 };
 
 play.addEventListener("click", startTask);
@@ -122,7 +122,7 @@ let breakTask = () => {
       breakTimeLeft--;
     }
     displayTimeLeft();
-  }, 100);
+  }, 1000);
 };
 
 //pause button
