@@ -39,10 +39,12 @@
                     <div>
                         <div class="form-row">
                             <div class="col">
+                                <label for="worktime">next work</label>
                                 <input id="worktime" type="number" min="1" max="999" class="form-control" value="25">
                             </div>
                             <div class="col">
-                                <input id="breakTime" type="number" min="1" max="99" class="form-control" value="5">
+                                <label for="breaktime">break session</label>
+                                <input id="breaktime" type="number" min="1" max="99" class="form-control" value="5">
                             </div>
                         </div>
                     </div>
@@ -50,7 +52,7 @@
                     <div class="mt-5 text-left">
                         <h2>Your Sessions</h2>
                         <ul>
-                            <li>Nothing to see yet...</li>
+                            <li id="msgli">Nothing to see yet...</li>
                         </ul>
                     </div>
                 </div>
