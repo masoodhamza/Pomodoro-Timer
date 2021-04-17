@@ -21,7 +21,7 @@
 
                 <div class="circle">
 
-                    <p id="timer" class="display-3 mx-auto">25:00</p>
+                    <p id="timer" class="display-3 mx-auto"></p>
 
                 </div>
                 <div class="my-3 text-secondary">
@@ -41,10 +41,11 @@
                     <div>
                         <div class="form-row">
                             <div class="col">
-                                <input id="time" type="number" min="0" class="form-control" value="25">
+
+                                <input id="time" type="number" min="1" max="999" class="form-control" value="25">
                             </div>
                             <div class="col">
-                                <input id="break" type="number" min="0" class="form-control" value="5">
+                                <input id="breakTime" type="number" min="1" max="99" class="form-control" value="5">
                             </div>
                         </div>
                     </div>
