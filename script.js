@@ -63,11 +63,11 @@ let startTask = () => {
 
     result += `${addZeroes(minutes)}:${addZeroes(seconds)}`;
     timer.innerText = result.toString();
-
-    play.classList.add("d-none");
-    pause.classList.remove("d-none");
-    stop.classList.remove("d-none");
   };
+
+  play.classList.add("d-none");
+  pause.classList.remove("d-none");
+  stop.classList.remove("d-none");
 
   workInterval = setInterval(() => {
     if (workTimeLeft == 0) {
@@ -107,11 +107,11 @@ let breakTask = () => {
 
     result += `${addZeroes(minutes)}:${addZeroes(seconds)}`;
     timer.innerText = result.toString();
-
-    play.classList.add("d-none");
-    pause.classList.remove("d-none");
-    stop.classList.remove("d-none");
   };
+
+  play.classList.add("d-none");
+  pause.classList.remove("d-none");
+  stop.classList.remove("d-none");
 
   breakInterval = setInterval(() => {
     if (breakTimeLeft == 0) {
@@ -142,14 +142,25 @@ let completeTask = () => {
   console.log("iwt-" + initialWorkTime);
   console.log("total-" + totalWorkTime);
   console.log("left-" + workTimeLeft);
+  const secondsLeft = totalWorkTime + initialWorkTime - workTimeLeft;
 
-  const timeConsumed = parseInt(
-    (totalWorkTime + initialWorkTime - workTimeLeft) / 60
-  );
+  const timeConsumed = () => {
+    let result = "";
+    const seconds = secondsLeft % 60;
+    const minutes = parseInt(secondsLeft / 60) % 60;
 
+    function addZeroes(time) {
+      return time < 10 ? `0${time}` : time;
+    }
+
+    result += `${addZeroes(minutes)}:${addZeroes(seconds)}`;
+    return result.toString();
+  };
+  
   li.textContent = `${task.value} : ${
-    timeConsumed > 0 ? timeConsumed + " mins" : " < 1 min"
+    secondsLeft > 60 ? timeConsumed() : " < 1 min"
   }`;
+
   taskList.appendChild(li);
 
   task.value = "";
