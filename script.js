@@ -7,95 +7,161 @@ const pause = document.querySelector("#pause");
 const stop = document.querySelector("#stop");
 const taskList = document.querySelector("ul");
 
-let timeInterval = null;
-let currentTimeLeft = workTime.value * 60;
-let initialTime = workTime.value * 60;
+let totalWorkTime = 0;
+
+let workInterval = null;
+let breakInterval = null;
+
+let initialWorkTime = workTime.value * 60;
+let workTimeLeft = workTime.value * 60;
+
+let initialBreakTime = breakTime.value * 60;
+let breakTimeLeft = breakTime.value * 60;
 
 play.disabled = true;
 pause.disabled = true;
 stop.disabled = true;
 
-timer.innerHTML = workTime.value + ":00";
+// do {
+  workTime.addEventListener("change", (e) => {
+    timer.innerHTML = e.target.value + ":00";
+    workTimeLeft = e.target.value * 60;
+    initialWorkTime = e.target.value * 60;
+  });
 
-workTime.addEventListener("change", (e) => {
-  timer.innerHTML = e.target.value + ":00";
-  currentTimeLeft = e.target.value * 60;
-  initialTime = e.target.value * 60;
-});
+  breakTime.addEventListener("change", (e) => {
+    timer.innerHTML = e.target.value + ":00";
+    breakTimeLeft = e.target.value * 60;
+    initialBreakTime = e.target.value * 60;
+  });
 
-task.addEventListener("keyup", () => {
-  play.disabled = false;
-  pause.disabled = false;
-  stop.disabled = false;
-});
+  task.addEventListener("keyup", () => {
+    play.disabled = false;
+    pause.disabled = false;
+    stop.disabled = false;
+  });
 
-play.addEventListener("click", () => {
-  workTime.disabled = true;
-  breakTime.disabled = true;
-  task.disabled = true;
+  //play button
+  let startTask = () => {
+    workTime.parentElement.classList.add("worktime");
+    timer.classList.add("timerwork");
+    breakTime.parentElement.classList.remove("breaktime");
+    timer.classList.remove("timerbreak");
 
-  const displayTimeLeft = () => {
-    const secondsLeft = currentTimeLeft;
-    let result = "";
-    const seconds = secondsLeft % 60;
-    const minutes = parseInt(secondsLeft / 60) % 60;
+    workTime.disabled = true;
+    breakTime.disabled = true;
+    task.disabled = true;
 
-    function addZeroes(time) {
-      return time < 10 ? `0${time}` : time;
-    }
+    const displayTimeLeft = () => {
+      const secondsLeft = workTimeLeft;
+      let result = "";
+      const seconds = secondsLeft % 60;
+      const minutes = parseInt(secondsLeft / 60) % 60;
 
-    result += `${addZeroes(minutes)}:${addZeroes(seconds)}`;
-    timer.innerText = result.toString();
+      function addZeroes(time) {
+        return time < 10 ? `0${time}` : time;
+      }
 
-    play.classList.add("d-none");
-    pause.classList.remove("d-none");
-    stop.classList.remove("d-none");
+      result += `${addZeroes(minutes)}:${addZeroes(seconds)}`;
+      timer.innerText = result.toString();
+
+      play.classList.add("d-none");
+      pause.classList.remove("d-none");
+      stop.classList.remove("d-none");
+    };
+
+    workInterval = setInterval(() => {
+      if (workTimeLeft == 0) {
+        clearInterval(workInterval);
+        totalWorkTime += initialWorkTime;
+        breakTask();        
+      } else {
+        workTimeLeft--;
+      }
+      displayTimeLeft();
+    }, 10);
   };
 
-  timeInterval = setInterval(() => {
-    if (currentTimeLeft == 0) {
-      clearInterval(timeInterval);
-      completeTask();
-    } else {
-      currentTimeLeft--;
-    }
-    displayTimeLeft();
-  }, 1000);
-});
+  play.addEventListener("click", startTask);
 
-pause.addEventListener("click", () => {
-  play.classList.remove("d-none");
-  pause.classList.add("d-none");
-  clearInterval(timeInterval);
-});
+  // break task
+  let breakTask = () => {
+    workTime.parentElement.classList.remove("worktime");
+    timer.classList.remove("timerwork");
+    breakTime.parentElement.classList.add("breaktime");
+    timer.classList.add("timerbreak");
 
-let completeTask = () => {
-  clearInterval(timeInterval);
-  const li = document.createElement("li");
+    workTime.disabled = true;
+    breakTime.disabled = true;
+    task.disabled = true;
 
-  const timeConsumed = parseInt((initialTime - currentTimeLeft) / 60);
+    const displayTimeLeft = () => {
+      const secondsLeft = breakTimeLeft;
+      let result = "";
+      const seconds = secondsLeft % 60;
+      const minutes = parseInt(secondsLeft / 60) % 60;
 
-  li.textContent = `${task.value} : ${
-    timeConsumed > 0 ? timeConsumed + " mins" : " < 1 min"
-  }`;
-  taskList.appendChild(li);
+      function addZeroes(time) {
+        return time < 10 ? `0${time}` : time;
+      }
 
-  task.value = "";
-  currentTimeLeft = workTime.value * 60;
-  timer.innerHTML = workTime.value + ":00";
+      result += `${addZeroes(minutes)}:${addZeroes(seconds)}`;
+      timer.innerText = result.toString();
 
-  play.disabled = true;
-  pause.disabled = true;
-  stop.disabled = true;
+      play.classList.add("d-none");
+      pause.classList.remove("d-none");
+      stop.classList.remove("d-none");
+    };
 
-  play.classList.remove("d-none");
-  pause.classList.add("d-none");
-  stop.classList.add("d-none");
-  document.querySelector("#msgli").classList.add("d-none");
+    breakInterval = setInterval(() => {
+      if (breakTimeLeft == 0) {
+        clearInterval(breakInterval);
+        startTask();        
+      } else {
+        breakTimeLeft--;
+      }
+      displayTimeLeft();
+    }, 10);
+  };
 
-  workTime.disabled = false;
-  breakTime.disabled = false;
-  task.disabled = false;
-};
+  //pause button
+  pause.addEventListener("click", () => {
+    play.classList.remove("d-none");
+    pause.classList.add("d-none");
+    clearInterval(workInterval);
+  });
 
-stop.addEventListener("click", completeTask);
+  //stop button
+  let completeTask = () => {
+    clearInterval(workInterval);
+    clearInterval(breakInterval);
+
+    const li = document.createElement("li");
+
+    const timeConsumed = parseInt((totalWorkTime - workTimeLeft) / 60);
+
+    li.textContent = `${task.value} : ${
+      timeConsumed > 0 ? timeConsumed + " mins" : " < 1 min"
+    }`;
+    taskList.appendChild(li);
+
+    task.value = "";
+    workTimeLeft = workTime.value * 60;
+    breakTimeLeft = breakTime.value * 60;
+
+    play.disabled = true;
+    pause.disabled = true;
+    stop.disabled = true;
+
+    play.classList.remove("d-none");
+    pause.classList.add("d-none");
+    stop.classList.add("d-none");
+    document.querySelector("#msgli").classList.add("d-none");
+
+    workTime.disabled = false;
+    breakTime.disabled = false;
+    task.disabled = false;    
+  };
+
+  stop.addEventListener("click", completeTask);
+// } while (isWorking);
