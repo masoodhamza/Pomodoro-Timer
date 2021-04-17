@@ -9,6 +9,8 @@ const play = document.querySelector("#play");
 const pause = document.querySelector("#pause");
 const stop = document.querySelector("#stop");
 
+let timeInterval = null;
+
 let isPaused = false;
 
 play.disabled = true;
@@ -51,9 +53,9 @@ play.addEventListener("click", () => {
     stop.classList.remove("d-none");
   };
 
-  let timeInterval = setInterval(() => {
-    if (isPaused || currentTimeLeft == 0) {
-      clearInterval(timeInterval);    
+  timeInterval = setInterval(() => {
+    if (currentTimeLeft == 0) {
+      clearInterval(timeInterval);
     } else {
       currentTimeLeft--;
     }
@@ -64,6 +66,8 @@ play.addEventListener("click", () => {
 pause.addEventListener("click", () => {
   play.classList.remove("d-none");
   pause.classList.add("d-none");
+  clearInterval(timeInterval);
   isPaused = true;
+
   console.log('a ' + currentTimeLeft)
 });
