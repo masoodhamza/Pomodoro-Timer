@@ -42,10 +42,10 @@ task.addEventListener("keyup", () => {
 
 //play button
 let startTask = () => {
-  workTime.parentElement.classList.add("worktime");
-  timer.classList.add("timerwork");
-  breakTime.parentElement.classList.remove("breaktime");
-  timer.classList.remove("timerbreak");
+  workTime.parentElement.classList.add("bg-success", "text-light");
+  timer.classList.add("text-success");
+  breakTime.parentElement.classList.remove("bg-danger", "text-light");
+  timer.classList.remove("text-danger");
 
   workTime.disabled = true;
   breakTime.disabled = true;
@@ -79,17 +79,17 @@ let startTask = () => {
       workTimeLeft--;
     }
     displayTimeLeft();
-  }, 1000);
+  }, 10);
 };
 
 play.addEventListener("click", startTask);
 
 // break task
 let breakTask = () => {
-  workTime.parentElement.classList.remove("worktime");
-  timer.classList.remove("timerwork");
-  breakTime.parentElement.classList.add("breaktime");
-  timer.classList.add("timerbreak");
+  workTime.parentElement.classList.remove("bg-success", "text-light");
+  timer.classList.remove("text-success");
+  breakTime.parentElement.classList.add("bg-danger", "text-light");
+  timer.classList.add("text-danger");
 
   workTime.disabled = true;
   breakTime.disabled = true;
@@ -122,7 +122,7 @@ let breakTask = () => {
       breakTimeLeft--;
     }
     displayTimeLeft();
-  }, 1000);
+  }, 10);
 };
 
 //pause button
@@ -130,6 +130,7 @@ pause.addEventListener("click", () => {
   play.classList.remove("d-none");
   pause.classList.add("d-none");
   clearInterval(workInterval);
+  clearInterval(breakInterval);
 });
 
 //stop button
@@ -138,10 +139,6 @@ let completeTask = () => {
   clearInterval(breakInterval);
 
   const li = document.createElement("li");
-
-  console.log("iwt-" + initialWorkTime);
-  console.log("total-" + totalWorkTime);
-  console.log("left-" + workTimeLeft);
   const secondsLeft = totalWorkTime + initialWorkTime - workTimeLeft;
 
   const timeConsumed = () => {
