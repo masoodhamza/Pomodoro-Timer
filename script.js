@@ -171,6 +171,7 @@ let completeTask = () => {
   task.disabled = false;
 
   totalWorkTime = 0;
+  isBreak = false;
 };
 
 //buttons events
