@@ -88,7 +88,7 @@ const disableInputs = () => {
 };
 
 //start task function
-let startWork = () => {
+let startTask = () => {
   //changing color of time started time
   workTime.parentElement.classList.add("bg-success", "text-light");
   timer.classList.add("text-success");
@@ -104,17 +104,17 @@ let startWork = () => {
       clearInterval(workInterval);
       totalWorkTime += initialWorkTime;
       workTimeLeft = workTime.value * 60;
-      breakTime();
+      breakTask();
     } else {
       workTimeLeft--;
     }
     isBreak = false;
     timer.innerText = displayTimeLeft(workTimeLeft);
-  }, 1000);
+  }, 10);
 };
 
 // break time function
-let breakTime = () => {
+let breakTask = () => {
   //changing color of time break time
   workTime.parentElement.classList.remove("bg-success", "text-light");
   timer.classList.remove("text-success");
@@ -129,17 +129,17 @@ let breakTime = () => {
     if (breakTimeLeft == 0) {
       clearInterval(breakInterval);
       breakTimeLeft = breakTime.value * 60;
-      startWork();
+      startTask();
     } else {
       breakTimeLeft--;
     }
     isBreak = true;
     timer.innerText = displayTimeLeft(breakTimeLeft);
-  }, 1000);
+  }, 10);
 };
 
 //complte work function
-let completeWork = () => {
+let completeTask = () => {
   clearInterval(workInterval);
   clearInterval(breakInterval);
 
@@ -175,7 +175,7 @@ let completeWork = () => {
 
 //buttons events
 //play button
-play.addEventListener("click", () => (isBreak ? breakTime() : startWork()));
+play.addEventListener("click", () => isBreak ? breakTask() : startTask());
 
 //pause button
 pause.addEventListener("click", () => {
@@ -186,4 +186,4 @@ pause.addEventListener("click", () => {
 });
 
 //stop button
-stop.addEventListener("click", completeWork);
+stop.addEventListener("click", completeTask);
