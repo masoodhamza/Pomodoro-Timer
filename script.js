@@ -26,6 +26,8 @@ let workTimeLeft = workTime.value * 60;
 let initialBreakTime = breakTime.value * 60;
 let breakTimeLeft = breakTime.value * 60;
 
+let isBreak = false;
+
 //buttons will be enabled when some task in taskbox
 // buttons disabled
 play.disabled = true;
@@ -105,11 +107,10 @@ let startTask = () => {
     } else {
       workTimeLeft--;
     }
+    isBreak = false;
     timer.innerText = displayTimeLeft(workTimeLeft);
   }, 1000);
 };
-
-play.addEventListener("click", startTask);
 
 // break task
 let breakTask = () => {
@@ -131,6 +132,7 @@ let breakTask = () => {
     } else {
       breakTimeLeft--;
     }
+    isBreak = true;
     timer.innerText = displayTimeLeft(breakTimeLeft);
   }, 1000);
 };
@@ -178,3 +180,9 @@ let completeTask = () => {
 };
 
 stop.addEventListener("click", completeTask);
+
+if (isBreak) {
+  play.addEventListener("click", breakTask);
+} else {
+  play.addEventListener("click", startTask);
+}
