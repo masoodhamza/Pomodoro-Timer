@@ -14,7 +14,7 @@
 <p>The Pomodoro Technique is created by Francesco Cirillo for a more productive way to work and study. The technique uses a timer to break down work into intervals, traditionally 25 minutes in length, separated by short breaks. Each interval is known as a pomodoro, from the Italian word for 'tomato', after the tomato-shaped kitchen timer that Cirillo used as a university student. - <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique" target="_blank" rel="noopener">Wikipedia</a></p>
 
 <h2>How to use the Pomodoro Timer?</h2>
-<ul>
+<ol>
     <li>Add tasks to work on today</li>
     <li>Set estimate time for task</li>
     <li>Set break time for task</li>
@@ -22,13 +22,16 @@
     <li>Take a break</li>
     <li>Iterate 3-5 until you finish the tasks</li>
     <li>If you finish task before click on stop</li>
-</ul>
+</ol>
 
 <h2>Features</h2>
 <ul>
+    <li>Beautiful and simple GUI</li>
     <li>Responsive design that works with desktop and mobile</li>
     <li>Color transition to switch moods between work time and rest time</li>
     <li>Customizable timer intervals to suit your preference</li>
+    <li>Pause and resume Pomodoro</li>
+    <li>Stay focused and get more things done</li>
 </ul>
 
 <h2>Technologies</h2>
@@ -37,5 +40,14 @@
     <li>Bootstrap</li>
     <li>HTML5</li>
     <li>CSS3</li>
+</ul>
+
+<h2>About Code</h2>
+<ul>
+    <li>Simple HTML/CSS/JS</li>
+    <li>Well organized</li>
+    <li>Well comminted</li>
+    <li>Self descriptive</li>
+    <li>Easy to understand</li>
 </ul>
 
