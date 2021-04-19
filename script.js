@@ -110,7 +110,7 @@ let startTask = () => {
     }
     isBreak = false;
     timer.innerText = displayTimeLeft(workTimeLeft);
-  }, 10);
+  }, 1000);
 };
 
 // break time function
@@ -135,7 +135,7 @@ let breakTask = () => {
     }
     isBreak = true;
     timer.innerText = displayTimeLeft(breakTimeLeft);
-  }, 10);
+  }, 1000);
 };
 
 //complte work function
