@@ -26,6 +26,7 @@ let workTimeLeft = workTime.value * 60;
 let initialBreakTime = breakTime.value * 60;
 let breakTimeLeft = breakTime.value * 60;
 
+// flag to check work/break
 let isBreak = false;
 
 //buttons will be enabled when some task in taskbox
@@ -86,8 +87,8 @@ const disableInputs = () => {
   stop.classList.remove("d-none");
 };
 
-//start task
-let startTask = () => {
+//start task function
+let startWork = () => {
   //changing color of time started time
   workTime.parentElement.classList.add("bg-success", "text-light");
   timer.classList.add("text-success");
@@ -103,7 +104,7 @@ let startTask = () => {
       clearInterval(workInterval);
       totalWorkTime += initialWorkTime;
       workTimeLeft = workTime.value * 60;
-      breakTask();
+      breakTime();
     } else {
       workTimeLeft--;
     }
@@ -112,8 +113,8 @@ let startTask = () => {
   }, 1000);
 };
 
-// break task
-let breakTask = () => {
+// break time function
+let breakTime = () => {
   //changing color of time break time
   workTime.parentElement.classList.remove("bg-success", "text-light");
   timer.classList.remove("text-success");
@@ -128,7 +129,7 @@ let breakTask = () => {
     if (breakTimeLeft == 0) {
       clearInterval(breakInterval);
       breakTimeLeft = breakTime.value * 60;
-      startTask();
+      startWork();
     } else {
       breakTimeLeft--;
     }
@@ -137,16 +138,8 @@ let breakTask = () => {
   }, 1000);
 };
 
-//pause button
-pause.addEventListener("click", () => {
-  play.classList.remove("d-none");
-  pause.classList.add("d-none");
-  clearInterval(workInterval);
-  clearInterval(breakInterval);
-});
-
-//stop button
-let completeTask = () => {
+//complte work function
+let completeWork = () => {
   clearInterval(workInterval);
   clearInterval(breakInterval);
 
@@ -162,6 +155,7 @@ let completeTask = () => {
   task.value = "";
   workTimeLeft = workTime.value * 60;
   breakTimeLeft = breakTime.value * 60;
+  timer.innerHTML = workTime.value + ":00";
 
   play.disabled = true;
   pause.disabled = true;
@@ -179,10 +173,17 @@ let completeTask = () => {
   totalWorkTime = 0;
 };
 
-stop.addEventListener("click", completeTask);
+//buttons events
+//play button
+play.addEventListener("click", () => (isBreak ? breakTime() : startWork()));
 
-if (isBreak) {
-  play.addEventListener("click", breakTask);
-} else {
-  play.addEventListener("click", startTask);
-}
+//pause button
+pause.addEventListener("click", () => {
+  play.classList.remove("d-none");
+  pause.classList.add("d-none");
+  clearInterval(workInterval);
+  clearInterval(breakInterval);
+});
+
+//stop button
+stop.addEventListener("click", completeWork);
